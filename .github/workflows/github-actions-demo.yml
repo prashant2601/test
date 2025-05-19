@@ -17,7 +17,7 @@ jobs:
 
 
 
-      - name: cd to the folder   #step 2 : see the content for testing only
+      - name: cd to the folder for test   #step 2 : see the content for testing only
         run: |
           ls -la
 
@@ -26,14 +26,27 @@ jobs:
         with: 
           node-version: '20.x'
 
-      - name: cd to the folder   #step 4 : npm run build in clien folder
-        run: |
-          cd client
-          npm install
-          npm run build
-
-      - name: cd to the folder   #step 5 : see the content for build
+      - name: cd to the folder cleint  #step 4 : see the content for build
         run: |
           cd client
           ls -la
+          cat .env
+          echo "VITE_API_BASE_URL = http://adeel12-hvash4dvd5hcaec6.centralus-01.azurewebsites.net"
+
+
+      # - name: cd to the folder in client for build  #step 4 : npm run build in clien folder
+      #   run: |
+      #     cd client
+      #     cat .env
+      #     echo "VITE_API_BASE_URL = http://adeel12-hvash4dvd5hcaec6.centralus-01.azurewebsites.net"
+      #     npm install
+      #     npm run build
+
+      - name: cd to the folder cleint to see the env content  #step 5 : see the content for build
+        run: |
+          cd client
+          ls -la
+          cat .env
+
+      
 
