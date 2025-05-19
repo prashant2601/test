@@ -38,6 +38,12 @@ jobs:
         run: |
           echo "current direcoty is : $(pwd)"
           echo -e "contents are:- \n$(ls -la)"
+          cd client
+          npm install
+          npm run build
+          echo "current direcoty is : $(pwd)"
+          echo -e "contents are:- \n$(ls -la)"
+
           
 
 
