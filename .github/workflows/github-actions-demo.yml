@@ -9,15 +9,18 @@ jobs:
   build-app:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout the code  #step 1 : checkout code
+      #step 1 : checkout code
+      - name: checkout the code 
         uses: actions/checkout@v4
-        # with:
-        #   repository: 'Developer-Personal/invoice-crm'
-        #   token: ${{ secrets.SOURCE_REPO_PAT }}
 
-
-
-      - name: cd to the folder for test   #step 2 : see the content for testing only
+      #step 2 : see the content for testing only
+      - name: see the content for testing only 
         run: |
           echo "direcoty is : $(pwd)"
           echo -e "contents are:- \n$(ls -la)"
+
+      #step 3 : change env in client
+      - name: change env in client
+        run: |
+          echo "VITE_API_BASE_URL = http://adeel12-hvash4dvd5hcaec6.centralus-01.azurewebsites.net" > client/.env
+          echo -e "the env in client is: \n$(cat client/.env)"
