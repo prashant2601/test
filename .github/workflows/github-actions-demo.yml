@@ -59,6 +59,12 @@ jobs:
           echo -e "contents are:- \n$(ls -la)"
           mkdir artifact
           cp -r server/. artifact
-          echo "current direcoty is : $(pwd)"
-          echo -e "contents are:- \n$(ls -la)"
+          cd artifact
+          echo -e "contentsin directory $(pwd) are:- \n$(ls -la)"
+          zip ../release.zip ./* -r
+          echo -e "contentsin directory $(pwd) are:- \n$(ls -la)"
+          cd ..
+          echo -e "contentsin directory $(pwd) are:- \n$(ls -la)"
+
+
 
