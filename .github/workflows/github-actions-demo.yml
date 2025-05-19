@@ -16,16 +16,14 @@ jobs:
       #step 2 : see the content for testing only
       - name: see the content for testing only 
         run: |
-          echo "current direcoty is : $(pwd)"
-          echo -e "contents are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
 
       #step 3 : change env in client
       - name: change env in client
         run: |
-          echo "VITE_API_BASE_URL = http://adeel12-hvash4dvd5hcaec6.centralus-01.azurewebsites.net" > client/.env
+          echo "VITE_API_BASE_URL = http://welcome-app1.azurewebsites.net" > client/.env
           echo -e "the env in client is: \n$(cat client/.env)"
-          echo "current direcoty is : $(pwd)"
-          echo -e "contents are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
 
       #step 4 node envioronment setup
       - name: Setup Node.js environment   
@@ -36,24 +34,21 @@ jobs:
       #step 5 : build the app
       - name: build the app
         run: |
-          echo "current direcoty is : $(pwd)"
-          echo -e "contents are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
           cd client
           npm install
           npm run build
-          echo "current direcoty is : $(pwd)"
-          echo -e "contents are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
           echo -e "the env in client is: \n$(cat .env)"
           cd ..
-          echo "current direcoty is : $(pwd)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
           cp -r client/dist server
           cd server
-          echo "current direcoty is : $(pwd)"
-          echo -e "contents are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
 
 
       #step 6 : copy to artifact
-      - name: copy to artifact
+      - name: copy to artifact and zip 
         run: |
           echo "current direcoty is : $(pwd)"
           echo -e "contents are:- \n$(ls -la)"
@@ -68,8 +63,38 @@ jobs:
 
       #step 7 : upload artifact
       - name: upload artifact
-        run: |
-          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
+        uses: actions/upload-artifact@v4
+        with:
+          name: node-app
+          path: release.zip 
 
+  deploy-app:
+    runs-on: ubuntu-latest
+    needs: build-app
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-on-webapp.outputs.webapp-url }}
+
+    steps:
+      #step 8 : download artifact
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: node-app
+
+      #step 9 : unzip artifact
+      - name: unzip artifact
+        run: |
+          unzip release.zip
+
+      #step 10 : Deploy to Azure Web App
+      - name: Deploy to Azure Web App
+        id: deploy-on-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: welcome-app1
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: .
 
 
