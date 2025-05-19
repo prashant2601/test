@@ -6,28 +6,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  job1:
+  build-app:
     runs-on: ubuntu-latest
     steps:
-      - name: Print a greeting  #step 1
-        env: 
-          MY_VAR: Hi there! My name is
-          FIRST_NAME: Mona
-          MIDDLE_NAME: The
-          LAST_NAME: Octocat
-        run: |
-          echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
+      - name: checkout the code  #step 1
+        uses: actions/checkout@v4
+        with:
+          repository: 'Developer-Personal/invoice-crm'
+          token: ${{ secrets.SOURCE_REPO_PAT }}
 
-      - name: install ssh pass  #step 2
-        run: |
-          sudo apt-get install -y sshpass
 
-      - name: login to VM #step 3
+
+      - name: cd to the folder   #step 2
         run: |
-          
-          # sshpass -p "welcome@12345" ssh welcomeuser@20.253.250.188
-          sshpass -p "welcome@12345" ssh -o StrictHostKeyChecking=no welcomeuser@20.253.250.188 \
-          "mkdir -p /home/welcomeuser/actions"
+          ls -la
+
+      # - name: login to VM #step 3
+      #   run: |
+
         
 
     
