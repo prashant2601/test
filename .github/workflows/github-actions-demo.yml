@@ -60,11 +60,16 @@ jobs:
           mkdir artifact
           cp -r server/. artifact
           cd artifact
-          echo -e "contentsin directory $(pwd) are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
           zip ../release.zip ./* -r
-          echo -e "contentsin directory $(pwd) are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
           cd ..
-          echo -e "contentsin directory $(pwd) are:- \n$(ls -la)"
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
+
+      #step 7 : upload artifact
+      - name: upload artifact
+        run: |
+          echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
 
 
 
