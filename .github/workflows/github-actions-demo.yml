@@ -26,7 +26,7 @@ jobs:
         with: 
           node-version: '20.x'
 
-      - name: cd to the folder cleint  #step 4 : see the content for build
+      - name: cd to the folder client  #step 4 : see the content for build
         run: |
           cd client
           ls -la
@@ -65,7 +65,9 @@ jobs:
           cd artifact
           echo "the path is $(pwd)"
           ls -a
-
+          zip ../release.zip ./* -r 
+          echo -e "the files are:- \n$(ls -la)"
+          
 
 
 
