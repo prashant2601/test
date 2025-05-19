@@ -52,10 +52,9 @@ jobs:
           echo -e "contents are:- \n$(ls -la)"
 
 
-
-          
-
-          
-
-
+      #step 6 : copy to artifact
+      - name: copy to artifact
+        run: |
+          echo "current direcoty is : $(pwd)"
+          echo -e "contents are:- \n$(ls -la)"
 
