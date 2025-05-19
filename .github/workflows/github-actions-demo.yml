@@ -19,5 +19,5 @@ jobs:
 
       - name: cd to the folder for test   #step 2 : see the content for testing only
         run: |
-          echo "direcoty is : $(pwd)
+          echo "direcoty is : $(pwd)"
           echo -e "contents are:- \n$(ls -la)"
