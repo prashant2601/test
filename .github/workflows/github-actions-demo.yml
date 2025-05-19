@@ -43,6 +43,17 @@ jobs:
           npm run build
           echo "current direcoty is : $(pwd)"
           echo -e "contents are:- \n$(ls -la)"
+          echo -e "the env in client is: \n$(cat .env)"
+          cd ..
+          echo "current direcoty is : $(pwd)"
+          cp -r client/dist server
+          cd server
+          echo "current direcoty is : $(pwd)"
+          echo -e "contents are:- \n$(ls -la)"
+
+
+
+          
 
           
 
