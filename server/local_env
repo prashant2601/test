@@ -1,0 +1,20 @@
+MONGO_URI = mongodb+srv://developerpersonal123:N2g4MUcg1F8XACDZ@invoice-crm-cluster.4wchd.mongodb.net/local-invoice-crm
+
+SUPER_ADMIN_SECRET = swishrsuperadmin
+
+# MONGO_URI = mongodb+srv://swishr:swishrbusiness@cluster0.v6poz.mongodb.net/swishr-prod
+
+JWT_SECRET = swishr
+
+JWT_REFRESH_SECRET = swishrrefresh
+
+API_DOMAIN = http://localhost:5000
+
+CLIENT_DOMAIN = http://localhost:3001
+
+AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=https;AccountName=swishrstorage;AccountKey=h1vn/lDDjZDhjoc6tFzlq0D6hJ7JTznbluqb095et6dWcy+AJsfZgHuRzl8tPbuwuJUhK2s+DqIs+AStYiTWhw==;EndpointSuffix=core.windows.net
+
+CONTAINER_NAME_UPLOAD_IMAGES = local-uploads-container
+CONTAINER_NAME_INVOICES = local-downloads-container  
+
+AZURE_EMAIL_CONNECTION_STRING=endpoint=https://crm-commservice.unitedstates.communication.azure.com/;accesskey=BQvJtlv349IMwLbNORmtX4LhXj9of6IDvFZAMtfTGUHoVTNArSaRJQQJ99BBACULyCpw1ULYAAAAAZCS1bFd

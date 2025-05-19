@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f3f4ff 0%, #e7f0ff 100%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 28rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 1rem 2rem;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo {
+            max-width: 150px;
+            height: auto;
+        }
+
+        h2 {
+            color: #1a1a1a;
+            font-size: 1.875rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .rating-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .star-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+            transition: transform 0.2s ease;
+        }
+
+        .star-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .star {
+            width: 32px;
+            height: 32px;
+            stroke: #9ca3af;
+            stroke-width: 2;
+            fill: none;
+            transition: all 0.2s ease;
+        }
+
+        .star.active {
+            stroke: #fbbf24;
+            fill: #fbbf24;
+        }
+
+        .suggestion-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .suggestion-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 0.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 8rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            resize: none;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: #8b5cf6;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        button[type="submit"]:hover {
+            background: #7c3aed;
+            transform: translateY(-1px);
+        }
+
+        button[type="submit"]:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            display: none;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2rem 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .success-message h3 {
+            color: #10b981;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message p {
+            color: #6b7280;
+        }
+
+        .error-message {
+            display: none;
+            text-align: center;
+            padding: 2rem 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .error-message h3 {
+            color: #dc2626;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .error-message p {
+            color: #6b7280;
+        }
+
+        .error-message.visible {
+            display: block;
+        }
+
+        .salutation {
+            text-align: center;
+            color: #4b5563;
+            font-size: 0.875rem;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        form.submitting .spinner {
+            display: inline-block;
+        }
+
+        form.submitted {
+            display: none;
+        }
+
+        .success-message.visible {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="logo-container">
+                <img src="https://swishrstorage.blob.core.windows.net/photos-public/swishr_logo.jpeg" alt="Swishr Logo"
+                    class="logo">
+            </div>
+
+            <h2>Your Feedback Matters</h2>
+
+            <div class="success-message">
+                <h3>Thank you for your feedback!</h3>
+                <p>Your input helps us improve our services.</p>
+            </div>
+
+            <div class="error-message">
+                <h3>Feedback Already Submitted</h3>
+                <p>You have already submitted feedback for this order.</p>
+            </div>
+
+            <form id="feedbackForm">
+                <div class="rating-container">
+                    <label class="rating-label">How would you rate your experience?</label>
+                    <div class="stars">
+                        <button type="button" class="star-btn" data-rating="1">
+                            <svg class="star" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                        </button>
+                        <button type="button" class="star-btn" data-rating="2">
+                            <svg class="star" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                        </button>
+                        <button type="button" class="star-btn" data-rating="3">
+                            <svg class="star" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                        </button>
+                        <button type="button" class="star-btn" data-rating="4">
+                            <svg class="star" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                        </button>
+                        <button type="button" class="star-btn" data-rating="5">
+                            <svg class="star" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="suggestion-container">
+                    <label for="suggestion" class="suggestion-label">Share your thoughts with us</label>
+                    <textarea id="suggestion" placeholder="Your feedback helps us improve..."></textarea>
+                </div>
+
+                <button type="submit" disabled>
+                    <svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 2a10 10 0 0 1 10 10"></path>
+                    </svg>
+                    <span>Submit Feedback</span>
+                </button>
+
+                <div class="salutation">
+                    <span>Regards</span> <br>
+                    <span>Swishr Team</span>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function () {
+            const form = document.getElementById('feedbackForm');
+            const stars = document.querySelectorAll('.star-btn');
+            const submitButton = form.querySelector('button[type="submit"]');
+            const successMessage = document.querySelector('.success-message');
+            const errorMessage = document.querySelector('.error-message');
+            let currentRating = 0;
+
+            /// Get token from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            const fromEmail = urlParams.get('fromEmail');
+
+            // Variables to store decrypted values
+            let customerId, orderId, merchantId;
+            if (token) {
+                try {
+                    const response = await fetch('http://localhost:5000/api/email/decryptToken', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ token })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        customerId = data.customerId;
+                        orderId = data.orderId;
+                        merchantId = data.merchantId;
+                    } else {
+                        alert('Invalid or expired token.');
+                    }
+                } catch (error) {
+                    console.error('Error decoding token:', error);
+                    alert('Error processing request.');
+                }
+            } else {
+                alert('No token found.');
+            }
+
+            // Star rating functionality
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    currentRating = rating;
+                    updateStars(rating);
+                    submitButton.disabled = false;
+                });
+
+                star.addEventListener('mouseenter', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    updateStars(rating);
+                });
+
+                star.addEventListener('mouseleave', () => {
+                    updateStars(currentRating);
+                });
+            });
+
+            function updateStars(rating) {
+                stars.forEach(star => {
+                    const starRating = parseInt(star.dataset.rating);
+                    star.querySelector('.star').classList.toggle('active', starRating <= rating);
+                });
+            }
+
+            // Form submission
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const suggestion = document.getElementById('suggestion').value;
+
+                // Add submitting state
+                form.classList.add('submitting');
+                submitButton.disabled = true;
+
+                try {
+                    const response = await fetch('http://localhost:5000/api/email/receiveFeedback', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            rating: currentRating,
+                            suggestion: suggestion,
+                            customerId: customerId,
+                            merchantId: merchantId,
+                            orderId: orderId
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Show success message
+                        form.classList.add('submitted');
+                        successMessage.classList.add('visible');
+                    } else {
+                        if (data?.success === false) {
+                            form.classList.add('submitted');
+                            errorMessage.classList.add('visible');
+                        } else {
+                            throw new Error('Submission failed');
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error submitting feedback:', error);
+                    alert('Failed to submit feedback. Please try again.');
+                } finally {
+                    form.classList.remove('submitting');
+                    submitButton.disabled = false;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

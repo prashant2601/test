@@ -1,0 +1,15 @@
+export enum TableNames {
+  AllInvoicesDisplay = 'AllInvoicesDisplay',
+  AllManualInvoicesDisplay = 'AllManualInvoicesDisplay',
+  AllOldInvoicesDisplay = 'AllOldInvoicesDisplay',
+  UsersDisplay = 'UsersDisplay',
+  BankAccountDisplay = 'BankAccountDisplay',
+  EmailDisplay = 'EmailDisplay',
+  MerchantsDisplay = 'MerchantsDisplay',
+  OrdersDisplay = 'OrdersDisplay',
+  SwishrCourierCustomersDisplay = 'SwishrCourierCustomersDisplay',
+  MerchantInvoicesData = 'MerchantInvoicesData',
+  RefundDisplay = 'RefundDisplay',
+  CustomersDisplay = 'CustomersDisplay',
+  ExpensesDisplay = 'ExpensesDisplay',
+}
