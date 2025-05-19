@@ -11,64 +11,13 @@ jobs:
     steps:
       - name: checkout the code  #step 1 : checkout code
         uses: actions/checkout@v4
-        with:
-          repository: 'Developer-Personal/invoice-crm'
-          token: ${{ secrets.SOURCE_REPO_PAT }}
+        # with:
+        #   repository: 'Developer-Personal/invoice-crm'
+        #   token: ${{ secrets.SOURCE_REPO_PAT }}
 
 
 
       - name: cd to the folder for test   #step 2 : see the content for testing only
         run: |
-          ls -la
-
-      - name: Setup Node.js environment   #step 3 node envioronment setup
-        uses: actions/setup-node@v4
-        with: 
-          node-version: '20.x'
-
-      - name: cd to the folder client  #step 4 : see the content for build
-        run: |
-          cd client
-          ls -la
-          cat .env
-          echo "VITE_API_BASE_URL = http://adeel12-hvash4dvd5hcaec6.centralus-01.azurewebsites.net" > .env
-
-
-      - name: cd to the folder in client for build  #step 5 : npm run build in clien folder
-        run: |
-          cd client
-          cat .env
-          npm install
-          npm run build
-
-      - name: cd to the folder cleint to see the env content  #step 6 : see the content for build
-        run: |
-          pwd
-          echo "the path is $(pwd)"
-          cd client
-          # ls -la
-          cat .env
-
-      - name: see the content in main folder  #step 7 : see the content in main f0lder 
-        run: |
-          ls -la
-          mkdir -p server/dist
-          cp -r client/dist/. server/dist
-          cd server
-          echo "the path is $(pwd)"
-          ls -a
-
-      - name: make artifact folder and copy the content  #step 8 : make artifact folder and copy the content 
-        run: |
-          mkdir artifact
-          cp -r server ./artifact/
-          cd artifact
-          echo "the path is $(pwd)"
-          ls -a
-          zip ../release.zip ./* -r 
-          echo -e "the files are:- \n$(ls -la)"
-          
-
-
-
-
+          echo "direcoty is : $(pwd)
+          echo -e "contents are:- \n$(ls -la)
