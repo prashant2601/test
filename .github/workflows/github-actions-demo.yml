@@ -32,7 +32,13 @@ jobs:
         uses: actions/setup-node@v4
         with: 
           node-version: '20.x'
+
+      #step 5 : build the app
+      - name: build the app
         run: |
           echo "current direcoty is : $(pwd)"
           echo -e "contents are:- \n$(ls -la)"
+          
+
+
 
