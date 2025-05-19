@@ -26,7 +26,8 @@ jobs:
         run: |
           
           # sshpass -p "welcome@12345" ssh welcomeuser@20.253.250.188
-          sshpass -p "welcome@12345" ssh -o StrictHostKeyChecking=no welcomeuser@20.253.250.188
+          sshpass -p "welcome@12345" ssh -o StrictHostKeyChecking=no welcomeuser@20.253.250.188 \
+          "mkdir -p /home/welcomeuser/actions"
         
 
     
