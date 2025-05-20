@@ -37,7 +37,7 @@ jobs:
           echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
           cd client
           npm install
-          npm run build
+          npm run build --if-present
           echo -e "contents in directory $(pwd) are:- \n$(ls -la)"
           echo -e "the env in client is: \n$(cat .env)"
           cd ..
